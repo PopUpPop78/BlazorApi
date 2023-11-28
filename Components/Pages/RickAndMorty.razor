@@ -1,0 +1,31 @@
+@page "/rickandmorty"
+
+<h1>Rick and Morty characters</h1>
+
+@if (characters == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h5>Count: @characters.Count()</h5>
+    <table class="table">
+        <thead>
+            <tr class="w-100">
+                <th class="col-4">Name</th>
+                <th class="col-3">Identifies As</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var character in characters)
+            {
+                <tr class="w-100">
+                    <td class="col-4">@character.Name</td>
+                    <td class="col-3">@character.Gender</td>
+                    <td><img src="@character.Image" alt="@character.Name" width="128" height="128"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

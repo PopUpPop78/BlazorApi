@@ -1,0 +1,31 @@
+@page "/films"
+
+<h1>Films</h1>
+
+@if (films == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h5>Count: @films.Count()</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Director</th>
+                <th>ReleaseDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var film in films)
+            {
+                <tr>
+                    <td>@film.Title</td>
+                    <td>@film.Director</td>
+                    <td>@film.ReleaseData</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

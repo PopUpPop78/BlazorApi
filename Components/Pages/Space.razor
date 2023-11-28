@@ -1,0 +1,35 @@
+﻿@page "/space"
+
+<PageTitle>Space Agencies Information</PageTitle>
+
+<h1>Space Agencies</h1>
+
+<p>This is data about space agencies</p>
+
+@if (spaceDto == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h5>Count: @spaceDto.Count</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var si in spaceDto.Results)
+            {
+                <tr>
+                    <td>@si.Name</td>
+                    <td>@si.Description</td>
+                    <td>@si.Id</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
