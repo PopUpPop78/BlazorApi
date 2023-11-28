@@ -1,5 +1,5 @@
 using BlazorApi.DataServices;
-using BlazorApi.Dtos;
+using BlazorApi.Dtos.Films;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorApi.Components.Pages

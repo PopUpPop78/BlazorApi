@@ -1,5 +1,5 @@
 using System.Net.Http.Json;
-using BlazorApi.Dtos;
+using BlazorApi.Dtos.Space;
 
 namespace BlazorApi.DataServices
 {

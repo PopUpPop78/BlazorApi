@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace BlazorApi.Dtos
+namespace BlazorApi.Dtos.Space
 {
     public class SpaceAgenciesDto
     {

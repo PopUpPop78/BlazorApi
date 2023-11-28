@@ -1,4 +1,4 @@
-using BlazorApi.Dtos;
+using BlazorApi.Dtos.Films;
 
 namespace BlazorApi.DataServices
 {

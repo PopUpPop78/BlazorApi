@@ -1,4 +1,3 @@
-using BlazorApi.Dtos;
 using BlazorApi.Dtos.RickAndMorty;
 
 namespace BlazorApi.DataServices

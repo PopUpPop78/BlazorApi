@@ -1,4 +1,4 @@
-using BlazorApi.Dtos;
+using BlazorApi.Dtos.Space;
 
 namespace BlazorApi.DataServices
 {
