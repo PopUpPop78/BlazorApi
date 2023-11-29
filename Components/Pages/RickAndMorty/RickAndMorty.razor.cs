@@ -10,25 +10,30 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         public IRickAndMortyDataService RickAndMortyDataService {get;set;}
         [Inject]
         public NavigationManager NavManager {get;set;}
+
         [Parameter]
         public int? ActivePage {get;set;}
+        [Parameter]
+        public int? MinPageView {get;set;}
+        
+        private const string disabled = "disabled";
+        private const string active = "active";
 
         private IEnumerable<CharacterInfo> characters;
 
         private int totalPages;
         private int totalCharacters;
         private int maxPagesView = 5;
-        private int minPageView = 1;
         private string filterText = string.Empty;
+        private string IsMinDisabled = disabled;
+        private string IsMaxDisabled = "";
         private int activePage = 1;
+        private int minPageView = 1;
 
         protected async override Task OnInitializedAsync()
         {
-            if(ActivePage != null)
-            {
-                activePage = ActivePage.Value;
-            }
-            
+            activePage = ActivePage ?? activePage;
+            minPageView = MinPageView ?? minPageView;
             await GetCharactersAndInfo();
         }
 
@@ -44,15 +49,37 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             }
         }
 
+        private void IncrementPageView()
+        {
+            if(minPageView + maxPagesView > totalPages)
+                return;
+
+            minPageView++;
+            IsMaxDisabled = minPageView + maxPagesView > totalPages ? disabled : "";
+            IsMinDisabled = minPageView == 1 ? disabled : "";
+            NavManager.NavigateTo($"/rickandmorty/{activePage}");
+        }
+
+        private void DecrementPageView()
+        {
+            if(minPageView == 1)
+                return;
+
+            minPageView--;
+            IsMinDisabled = minPageView == 1 ? disabled : "";
+            IsMaxDisabled = minPageView + maxPagesView > totalPages ? disabled : "";
+            NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}");            
+        }
+
         private string IsActive(int item)
         {
-            return item == activePage ? " active" : ""; 
+            return item == activePage ? active : ""; 
         }
 
         private void SetActive(int item)
         {
             activePage = item;
-            NavManager.NavigateTo($"/rickandmorty/{activePage}");
+            NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}");
         }
 
         private void ViewCharacter(string id)

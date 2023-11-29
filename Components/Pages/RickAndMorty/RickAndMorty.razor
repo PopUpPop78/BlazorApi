@@ -1,4 +1,4 @@
-@page "/rickandmorty/{activePage:int?}"
+@page "/rickandmorty/{activePage:int?}/{minPageView:int?}"
 
 <h1>Rick and Morty Characters</h1>
 
@@ -12,18 +12,18 @@ else
 
         <nav aria-label="...">
             <ul class="pagination pagination-sm">
-                <li class="page-item disabled view-select">
-                    <div class="page-link" tabindex="-1" aria-disabled="true">Previous</div>
+                <li class="page-item @IsMinDisabled view-select" @onclick=@(() => DecrementPageView())>
+                    <button class="page-link" tabindex="-1">Previous</button>
                 </li>
-                @for (var i = minPageView; i <= maxPagesView; i++)
+                @for (var i = minPageView; i < maxPagesView + minPageView; i++)
                 {
                     var index = i;
                     <li class="page-item view-select @IsActive(index)" @onclick=@(async () => {SetActive(index); await GetCharactersAndInfo();})>
-                        <div class="page-link">@index</div>
+                        <button style="width:40px!important" class="page-link">@index</button>
                     </li>
                 }
-                <li class="page-item view-select">
-                    <div class="page-link">Next</div>
+                <li class="page-item @IsMaxDisabled view-select" @onclick=@(() => IncrementPageView())>
+                    <button class="page-link">Next</button>
                 </li>
             </ul>
         </nav>
