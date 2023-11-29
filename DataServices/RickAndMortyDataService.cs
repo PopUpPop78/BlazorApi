@@ -28,7 +28,7 @@ namespace BlazorApi.DataServices
         {
             var query = new 
             {
-                query = "{episode(id:" + id + ") {id name episode air_date characters {id name}}}"
+                query = "{episode(id:" + id + ") {id name episode air_date characters {id name image}}}"
             };
 
             return await Post<EpisodeReadDto>(query);

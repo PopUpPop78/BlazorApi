@@ -33,8 +33,15 @@ else
             </div>
             <hr>
             <div class="d-flex">
-                <div class="col-3"><b>Type</b></div>
-                <div>@character.Type</div>
+                <div class="col-3"><b>Species Subtype</b></div>
+                @if(string.IsNullOrWhiteSpace(character.Type))
+                {
+                    <div>-</div>
+                }
+                else
+                {
+                    <div>@character.Type</div>
+                }
             </div>
             <hr>
             <div class="d-flex">

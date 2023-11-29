@@ -21,12 +21,12 @@ else
 
         <div class="row">
             <div class="d-flex">
-                <div class="col-3"><b>Gender</b></div>
+                <div class="col-3"><b>Season / Episode</b></div>
                 <div>@episode.Episode</div>
             </div>
             <hr>
             <div class="d-flex">
-                <div class="col-3"><b>Species</b></div>
+                <div class="col-3"><b>Air Date</b></div>
                 <div>@episode.AirDate</div>
             </div>
             <hr>
@@ -35,7 +35,11 @@ else
                 <div>
                     @foreach (var character in episode.Characters)
                     {
-                        <span class="view-select badge rounded-pill bg-secondary mx-1" @onclick=@(()=>ViewCharacter(character.Id))>@character.Name</span>
+                        <div class="view-select mx-1 my-1" @onclick=@(()=>ViewCharacter(character.Id))>
+                            <img src="@character.Image" alt="@character.Name" width="128" height="128">
+                            <div class="badge bg-secondary">@character.Name</div>
+                        </div>
+                        
                     }
                 </div>
             </div>
