@@ -5,6 +5,6 @@ namespace BlazorApi.Dtos.RickAndMorty
     public class CharactersInfo
     {
         [JsonPropertyName("results")]
-        public IEnumerable<Character> Characters {get;set;}
+        public IEnumerable<CharacterInfo> Characters {get;set;}
     }
 }

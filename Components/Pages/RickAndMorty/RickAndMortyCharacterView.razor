@@ -1,0 +1,66 @@
+@page "/characterView/{id}"
+
+<style>
+    .view-select:hover {
+    cursor: pointer;
+}
+</style>
+
+@if(character == null)
+{
+    <p><em>Loading...</em></p>    
+}
+else
+{
+    <div class="container">
+        <div class="row">    
+            <div class="col-6 offset-3 col-sm-6 offset-sm-3 text-center"><img src="@character.Image" alt="@character.Name"></div>
+            <div class="w-100 mt-3"></div>
+            <div class="col-6 offset-3 col-sm-6 offset-sm-3 text-center"><h2>@character.Name</h2></div>
+        </div>
+
+        <div class="w-100 mt-3"></div>
+
+        <div class="row">
+            <div class="d-flex">
+                <div class="col-3"><b>Gender</b></div>
+                <div>@character.Gender</div>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="col-3"><b>Species</b></div>
+                <div>@character.Species</div>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="col-3"><b>Type</b></div>
+                <div>@character.Type</div>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="col-3"><b>Status</b></div>
+                <div>@character.Status</div>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="col-3"><b>Origin</b></div>
+                <div>@character.Origin?.Name</div>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="col-3"><b>Location</b></div>
+                <div>@character.Location?.Name</div>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="col-3"><b>Episodes</b></div>
+                <div>
+                    @foreach (var episode in character.Episodes)
+                    {
+                        <span class="view-select badge rounded-pill bg-secondary mx-1" @onclick=@(()=>ViewEpisode(episode.Id))>@episode.Name</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

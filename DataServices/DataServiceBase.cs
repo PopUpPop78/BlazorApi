@@ -14,6 +14,8 @@ namespace BlazorApi.DataServices
             var content = new StringContent(contentString, Encoding.UTF8, "application/json");
 
             var response = await Client.PostAsync("", content);
+            var responseString = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(responseString);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var filmsData = await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync());
@@ -21,8 +23,8 @@ namespace BlazorApi.DataServices
             }
             else
             {
-                var responseString = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(responseString);
+                //var responseString = await response.Content.ReadAsStringAsync();
+                //Console.WriteLine(responseString);
             }
 
             return null;
