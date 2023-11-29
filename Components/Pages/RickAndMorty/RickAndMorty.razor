@@ -1,6 +1,6 @@
-@page "/rickandmorty"
+@page "/rickandmorty/{activePage:int?}"
 
-<h1>Rick and Morty characters</h1>
+<h1>Rick and Morty Characters</h1>
 
 @if (characters == null)
 {
@@ -8,24 +8,45 @@
 }
 else
 {
-    <h5>Count: @characters.Count()</h5>
-    <table class="table">
-        <thead>
-            <tr class="w-100">
-                <th class="col-4">Name</th>
-                <th class="col-3">Identifies As</th>
-                <th>Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var character in characters)
-            {
-                <tr class="w-100 view-select" @onclick=@(() => ViewCharacter(character.Id))>
-                    <td class="col-4">@character.Name</td>
-                    <td class="col-3">@character.Gender</td>
-                    <td><img src="@character.Image" alt="@character.Name" width="128" height="128"></td>
+    <div class="container-fluid mt-4">
+
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+                <li class="page-item disabled view-select">
+                    <div class="page-link" tabindex="-1" aria-disabled="true">Previous</div>
+                </li>
+                @for (var i = minPageView; i <= maxPagesView; i++)
+                {
+                    var index = i;
+                    <li class="page-item view-select @IsActive(index)" @onclick=@(async () => {SetActive(index); await GetCharactersAndInfo();})>
+                        <div class="page-link">@index</div>
+                    </li>
+                }
+                <li class="page-item view-select">
+                    <div class="page-link">Next</div>
+                </li>
+            </ul>
+        </nav>
+
+        <table class="table">
+            <thead>
+                <tr class="w-100">
+                    <th class="col-4">Name</th>
+                    <th class="col-3">Identifies As</th>
+                    <th>Image</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var character in characters)
+                {
+                    <tr class="w-100 view-select" @onclick=@(() => ViewCharacter(character.Id))>
+                        <td class="col-4">@character.Name</td>
+                        <td class="col-3">@character.Gender</td>
+                        <td><img src="@character.Image" alt="@character.Name" width="128" height="128"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
 }

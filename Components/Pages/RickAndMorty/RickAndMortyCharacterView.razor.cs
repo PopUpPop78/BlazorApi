@@ -19,7 +19,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         {
             var characterDto = await RickAndMortyDataService.GetCharacter(Id);
             if(characterDto != null)
-                character = characterDto.Data.CharachterInfo;
+                character = characterDto.Data.CharacterInfo;
         }
 
         private void ViewEpisode(string episodeId)

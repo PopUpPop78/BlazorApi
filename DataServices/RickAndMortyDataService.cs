@@ -4,11 +4,11 @@ namespace BlazorApi.DataServices
 {
     public class RickAndMortyDataService(HttpClient client) : DataServiceBase(client), IRickAndMortyDataService
     {
-        public async Task<CharactersReadAllDto> GetAllCharacters()
+        public async Task<CharactersReadAllDto> GetAllCharacters(int page, string filterText)
         {
             var query = new 
             {
-                query = "{characters(page: 1, filter: { name: \"rick\" }) {results {id name image gender}}}"
+                query = "{characters(page: " + page + ", filter: { name: \"" + filterText + "\" }) {info {pages count} results {id name image gender}}}"
             };
 
             return await Post<CharactersReadAllDto>(query);
