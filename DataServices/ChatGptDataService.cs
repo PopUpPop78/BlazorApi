@@ -13,6 +13,9 @@ namespace BlazorApi.DataServices
             try
             {
                 var response = await Post<Response>(request);
+                if(response == null)
+                    throw new Exception("The response returned was null. See console for more information.");
+                    
                 return response?.Choices?.FirstOrDefault()?.Text;
             }
             catch(Exception ex)

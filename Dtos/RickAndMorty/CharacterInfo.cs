@@ -25,6 +25,6 @@ namespace BlazorApi.Dtos.RickAndMorty
         [JsonPropertyName("episode")]
         public IEnumerable<Generic> Episodes {get;set;}
 
-        public string AskChatGtp => $"Who is the character {Name} from Rick and Morty in episodes {string.Join(",", from x in Episodes select x.Name)}?";
+        public string AskChatGtp => $"Who is the character {Name} from Rick and Morty?";
     }
 }
