@@ -1,0 +1,32 @@
+@page "/chatgpt"
+
+<style>    
+    .spinner-grow {
+        margin-right:4px;
+        opacity: 0.5!important;
+}.slow{
+    animation-duration: 1000ms;
+}.quicker {
+    animation-duration: 1250ms;
+}.quickest {
+    animation-duration: 1500ms;
+}
+</style>
+
+<div class="d-flex">
+    <div class="col-3"><b>Chat GPT</b></div>
+    <div class="pb-2">
+        @if(string.IsNullOrWhiteSpace(opinion))
+        {
+            <div class="d-flex">
+                <div class="spinner-grow text-primary slow"></div>
+                <div class="spinner-grow text-warning quicker"></div>
+                <div class="spinner-grow text-danger quickest"></div>
+            </div>
+        }
+        else
+        {
+            <div>@opinion</div>
+        }
+    </div>
+</div>

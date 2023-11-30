@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace BlazorApi.Dtos.RickAndMorty
 {
-    public class LocationInfo
+    public class LocationInfo : IAskChatGpt
     {
         [JsonPropertyName("name")]
         public string Name {get;set;}
@@ -12,5 +12,7 @@ namespace BlazorApi.Dtos.RickAndMorty
         public string Dimension {get;set;}
         [JsonPropertyName("residents")]
         public IEnumerable<CharacterInfo> Characters {get;set;}
+
+        public string AskChatGtp => $"Tell me about the location in rick and morty called {Name} in dimension {Dimension}";
     }
 }

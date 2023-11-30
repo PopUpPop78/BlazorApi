@@ -24,6 +24,8 @@ else
                 <div>@episode.AirDate</div>
             </div>
             <hr>
+            <ChatGpt Question=@(episode.AskChatGtp)></ChatGpt>
+            <hr>
             <div class="d-flex">
                 <div class="col-3"><b>Characters</b></div>
                 <div>

@@ -9,7 +9,9 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         [Inject]
         public IRickAndMortyDataService RickAndMortyDataService {get;set;}
         [Inject]
-        public NavigationManager navManager {get;set;}
+        public IChatGptDataService ChatGptDataService {get;set;}
+        [Inject]
+        public NavigationManager NavManager {get;set;}
         [Parameter]
         public string Id {get;set;}
 
@@ -25,13 +27,13 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         private void ViewLocation(string locationId)
         {
             Console.WriteLine($"Getting location info for {locationId}");
-            navManager.NavigateTo($"/locationView/{locationId}");            
+            NavManager.NavigateTo($"/locationView/{locationId}");            
         }
 
         private void ViewEpisode(string episodeId)
         {
             Console.WriteLine($"Navigating to episode {episodeId}");
-            navManager.NavigateTo($"/episodeView/{episodeId}");
+            NavManager.NavigateTo($"/episodeView/{episodeId}");
         }
     }
 }

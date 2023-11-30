@@ -1,0 +1,46 @@
+@page "/bearertokensaver"
+
+<style>
+    .btn.custom {
+        color: #1b6ec2;
+    }
+    .btn.custom:hover {
+        text-decoration: underline;
+        color: #1b6ec2;
+    }
+</style>
+
+<div class="btn custom" @onclick=@(() => Open())>Save ChatGTP Token</div>
+
+<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Save your ChatGPT Bearer Token</h5>
+                <span><div type="button" class="btn-close" @onclick=@(() => Close())></div></span>
+            </div>
+            <EditForm OnValidSubmit="Save" EditContext="editContext">
+                <DataAnnotationsValidator />
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="col-3" disabled>Bearer </div>
+                        <InputText @bind-Value="Token.ChatGtp" class="form-control" placeholder="Token"></InputText>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col-3"></div>
+                        <small style="color:red;font-size:12px"><ValidationMessage For="() => Token.ChatGtp"/></small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <div class="btn btn-secondary" @onclick=@(() => Close())>Close</div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}

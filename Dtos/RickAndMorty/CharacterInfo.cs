@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace BlazorApi.Dtos.RickAndMorty
 {
-    public class CharacterInfo
+    public class CharacterInfo : IAskChatGpt
     {
         [JsonPropertyName("id")]
         public string Id {get;set;}
@@ -25,6 +25,6 @@ namespace BlazorApi.Dtos.RickAndMorty
         [JsonPropertyName("episode")]
         public IEnumerable<Generic> Episodes {get;set;}
 
-        public string EpisodesString => string.Join("\n", from x in Episodes select x.Name);
+        public string AskChatGtp => $"Who is the character {Name} from Rick and Morty in episodes {string.Join(",", from x in Episodes select x.Name)}?";
     }
 }
