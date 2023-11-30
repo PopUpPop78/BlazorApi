@@ -1,39 +1,44 @@
-@page "/episodeView/{id}"
+@page "/locationView/{id?}"
 
-@if(episode == null)
+
+@if(Id == null)
 {
-    <p><em>Loading...</em></p>    
+    <p><em>No information exists for this location</em></p>
+    <img src="/sample-data/top-secret.png" alt="TopSecret">
+}
+else if (location == null)
+{
+    <p><em>Loading...</em></p>        
 }
 else
 {
     <div class="container">
         <div class="row">
-            <div class="col-6 offset-3 col-sm-6 offset-sm-3 text-center"><h2>@episode.Name</h2></div>
+            <div class="col-6 offset-3 col-sm-6 offset-sm-3 text-center"><h2>@location.Name</h2></div>
         </div>
 
         <div class="w-100 mt-3"></div>
 
         <div class="row">
             <div class="d-flex">
-                <div class="col-3"><b>Season / Episode</b></div>
-                <div>@episode.Episode</div>
+                <div class="col-3"><b>Dimension</b></div>
+                <div>@location.Dimension</div>
             </div>
             <hr>
             <div class="d-flex">
-                <div class="col-3"><b>Air Date</b></div>
-                <div>@episode.AirDate</div>
+                <div class="col-3"><b>Type</b></div>
+                <div>@location.Type</div>
             </div>
             <hr>
             <div class="d-flex">
                 <div class="col-3"><b>Characters</b></div>
                 <div>
-                    @foreach (var character in episode.Characters)
+                    @foreach (var character in location.Characters)
                     {
                         <div class="view-select mx-1 my-1" @onclick=@(()=>ViewCharacter(character.Id))>
                             <img src="@character.Image" alt="@character.Name" width="128" height="128">
                             <div class="badge bg-secondary">@character.Name</div>
-                        </div>
-                        
+                        </div>   
                     }
                 </div>
             </div>

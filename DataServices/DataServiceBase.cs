@@ -1,13 +1,20 @@
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace BlazorApi.DataServices
 {
     public abstract class DataServiceBase(HttpClient client)
     {
         // We use this unrelaxed encoding in order to maintain double quotes with empty filter string
-        private static readonly JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+        private static readonly JsonSerializerOptions options = new JsonSerializerOptions 
+        {
+             WriteIndented = true,
+             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+             
+        };
+
         public HttpClient Client { get; } = client;
 
         public virtual async Task<T> Post<T>(object query) where T : class

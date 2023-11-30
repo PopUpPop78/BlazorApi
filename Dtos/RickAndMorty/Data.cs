@@ -9,6 +9,8 @@ namespace BlazorApi.Dtos.RickAndMorty
         [JsonPropertyName("character")]
         public CharacterInfo CharacterInfo {get;set;}
         [JsonPropertyName("episode")]
-        public EpisodeInfo Episode {get;set;}
+        public EpisodeInfo EpisodeInfo {get;set;}
+        [JsonPropertyName("location")]
+        public LocationInfo LocationInfo {get;set;}
     }
 }

@@ -33,5 +33,15 @@ namespace BlazorApi.DataServices
 
             return await Post<EpisodeReadDto>(query);
         }
+
+        public async Task<LocationReadDto> GetLocation(string id)
+        {
+            var query = new
+            {
+                query = "{location(id: " + id + ") {name type dimension residents {id name image}}}"
+            };
+
+            return await Post<LocationReadDto>(query);
+        }
     }
 }

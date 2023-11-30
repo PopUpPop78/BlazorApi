@@ -1,6 +1,27 @@
-@page "/rickandmorty/{activePage:int?}/{minPageView:int?}"
+@page "/rickandmorty/{activePage:int?}/{minPageView:int?}/{filterText?}"
+
+<style>
+    .disabled {
+        pointer-events: none;
+        text-decoration: none;
+        opacity: 0.7;        
+    }
+    
+    ul li {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+</style>
 
 <h1>Rick and Morty Characters</h1>
+
+<h2>Min + Max: @(minPageView + maxPagesView)</h2>
+<h2>Total: @(totalPages)</h2>
 
 @if (characters == null)
 {
@@ -9,24 +30,39 @@
 else
 {
     <div class="container-fluid mt-4">
+        <div class="row justify-content-between">
+            <div class="col-8">
+                <div class="d-flex">
+                    <div class="col-4">
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-sm">
+                                <li class="page-item @IsMinDisabled view-select" @onclick=@(() => DecrementPageView())>
+                                    <button class="page-link @IsMinDisabled" tabindex="-1">Previous</button>
+                                </li>
+                                @for (var i = minPageView; i <= @Math.Min(minPageView + maxPagesView - 1, totalPages); i++)
+                                {
+                                    var index = i;
+                                    <li class="page-item view-select @IsActive(index)" @onclick=@(async () => {SetActive(index); await GetCharactersAndInfo();})>
+                                        <button style="width:40px!important" class="page-link">@index</button>
+                                    </li>
+                                }
+                                <li class="page-item @IsMaxDisabled view-select" @onclick=@(() => IncrementPageView())>
+                                    <button class="page-link @IsMaxDisabled">Next</button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
 
-        <nav aria-label="...">
-            <ul class="pagination pagination-sm">
-                <li class="page-item @IsMinDisabled view-select" @onclick=@(() => DecrementPageView())>
-                    <button class="page-link" tabindex="-1">Previous</button>
-                </li>
-                @for (var i = minPageView; i < maxPagesView + minPageView; i++)
-                {
-                    var index = i;
-                    <li class="page-item view-select @IsActive(index)" @onclick=@(async () => {SetActive(index); await GetCharactersAndInfo();})>
-                        <button style="width:40px!important" class="page-link">@index</button>
-                    </li>
-                }
-                <li class="page-item @IsMaxDisabled view-select" @onclick=@(() => IncrementPageView())>
-                    <button class="page-link">Next</button>
-                </li>
-            </ul>
-        </nav>
+            <div class="col-4">
+                <div class="input-group input-group-sm mb-3">
+                    <input @bind-value="filterText" @bind-value:event="oninput" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Filter Text">
+                    <div class="btn btn-primary" @onclick=@(async () => await GetCharactersAndInfo())>Submit</div>
+                    <div class="btn btn-warning" @onclick=@(async () => { filterText = string.Empty; await GetCharactersAndInfo(); })>Clear</div>
+                </div>
+            </div>
+        </div>
 
         <table class="table">
             <thead>

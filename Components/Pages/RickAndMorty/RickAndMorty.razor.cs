@@ -15,6 +15,8 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         public int? ActivePage {get;set;}
         [Parameter]
         public int? MinPageView {get;set;}
+        [Parameter]
+        public string FilterText {get;set;}
         
         private const string disabled = "disabled";
         private const string active = "active";
@@ -34,6 +36,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         {
             activePage = ActivePage ?? activePage;
             minPageView = MinPageView ?? minPageView;
+            filterText = FilterText ?? filterText;
             await GetCharactersAndInfo();
         }
 
@@ -44,9 +47,11 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             if(charactersDto != null)
             {
                 characters = charactersDto.Data.CharactersInfo.Characters;
-                totalPages = charactersDto.Data.CharactersInfo.Info.Pages;
-                totalCharacters = charactersDto.Data.CharactersInfo.Info.Count;
+                totalPages = charactersDto.Data.CharactersInfo.Info.Pages ?? 1;
+                totalCharacters = charactersDto.Data.CharactersInfo.Info.Count ?? 0;
             }
+            
+            NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}/{filterText}");
         }
 
         private void IncrementPageView()
@@ -57,7 +62,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             minPageView++;
             IsMaxDisabled = minPageView + maxPagesView > totalPages ? disabled : "";
             IsMinDisabled = minPageView == 1 ? disabled : "";
-            NavManager.NavigateTo($"/rickandmorty/{activePage}");
+            NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}/{filterText}");
         }
 
         private void DecrementPageView()
@@ -68,7 +73,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             minPageView--;
             IsMinDisabled = minPageView == 1 ? disabled : "";
             IsMaxDisabled = minPageView + maxPagesView > totalPages ? disabled : "";
-            NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}");            
+            NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}/{filterText}"); 
         }
 
         private string IsActive(int item)
@@ -79,7 +84,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         private void SetActive(int item)
         {
             activePage = item;
-            NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}");
+            NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}/{filterText}");
         }
 
         private void ViewCharacter(string id)

@@ -105,3 +105,8 @@ code {
 .view-select:hover {
     cursor: pointer;
 }
+
+/* Want a little distance between pills */
+.badge {
+    margin-right:3px;
+}

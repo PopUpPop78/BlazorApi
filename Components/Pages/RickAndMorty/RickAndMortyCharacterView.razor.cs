@@ -22,6 +22,12 @@ namespace BlazorApi.Components.Pages.RickAndMorty
                 character = characterDto.Data.CharacterInfo;
         }
 
+        private void ViewLocation(string locationId)
+        {
+            Console.WriteLine($"Getting location info for {locationId}");
+            navManager.NavigateTo($"/locationView/{locationId}");            
+        }
+
         private void ViewEpisode(string episodeId)
         {
             Console.WriteLine($"Navigating to episode {episodeId}");

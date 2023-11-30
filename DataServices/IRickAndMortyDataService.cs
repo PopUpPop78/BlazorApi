@@ -7,5 +7,6 @@ namespace BlazorApi.DataServices
         Task<CharactersReadAllDto> GetAllCharacters(int page, string filter);
         Task<CharacterReadDto> GetCharacter(string id);
         Task<EpisodeReadDto> GetEpisode(string id);
+        Task<LocationReadDto> GetLocation(string id);
     }
 }

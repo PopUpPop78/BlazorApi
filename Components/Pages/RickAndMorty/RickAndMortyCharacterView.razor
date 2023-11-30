@@ -1,11 +1,5 @@
 @page "/characterView/{id}"
 
-<style>
-    .view-select:hover {
-    cursor: pointer;
-}
-</style>
-
 @if(character == null)
 {
     <p><em>Loading...</em></p>    
@@ -55,16 +49,22 @@ else
             </div>
             <hr>
             <div class="d-flex">
-                <div class="col-3"><b>Location</b></div>
-                <div>@character.Location?.Name</div>
+                <div class="col-3"><b>Last Known Location</b></div>
+                <div class="pb-2">
+                    <div class="view-select badge bg-secondary" @onclick=@(() => ViewLocation(character.Location.Id))>
+                        @character.Location?.Name
+                    </div>
+                </div>
             </div>
             <hr>
             <div class="d-flex">
                 <div class="col-3"><b>Episodes</b></div>
-                <div>
+                <div class="pb-2" style="margin-right:1px">
                     @foreach (var episode in character.Episodes)
                     {
-                        <span class="view-select badge rounded-pill bg-secondary mx-1" @onclick=@(()=>ViewEpisode(episode.Id))>@episode.Name</span>
+                        <div class="view-select badge bg-secondary" @onclick=@(()=>ViewEpisode(episode.Id))>
+                            @episode.Name
+                        </div>
                     }
                 </div>
             </div>

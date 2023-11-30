@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace BlazorApi.Components.Pages.RickAndMorty
 {
-    public partial class RickAndMortyEpisodeView
+    public partial class RickAndMortyLocationView
     {
         [Inject]
         public IRickAndMortyDataService RickAndMortyDataService {get;set;}
@@ -13,14 +13,17 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         [Parameter]
         public string Id {get;set;}
 
-        private EpisodeInfo episode;
+        private LocationInfo location;
 
         protected async override Task OnInitializedAsync()
         {
-            var episodeDto = await RickAndMortyDataService.GetEpisode(Id);
+            if(Id == null)
+                return;
+                
+            var locationDto = await RickAndMortyDataService.GetLocation(Id);
 
-            if(episodeDto != null)
-                episode = episodeDto.Data.EpisodeInfo;
+            if(locationDto != null)
+                location = locationDto.Data.LocationInfo;
         }
 
         private void ViewCharacter(string characterId)
