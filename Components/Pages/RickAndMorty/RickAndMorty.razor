@@ -1,53 +1,37 @@
 @page "/rickandmorty/{activePage:int?}/{minPageView:int?}/{filterText?}"
 
-<style>
-    .disabled {
-        pointer-events: none;
-        text-decoration: none;
-        opacity: 0.7;        
-    }
-    
-    ul li {
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-    
-</style>
-
-<h1>Rick and Morty Characters</h1>
-
 @if (characters == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <div class="container-fluid mt-4">
-        <div class="row justify-content-between">
-            <div class="d-flex justify-content-between">
+    <div class="container">
 
-                <div class="col-6">
-                    <div class="input-group input-group-sm mb-3">
-                        <input @bind-value="filterText" @bind-value:event="oninput" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Filter Text">
-                        <div class="btn btn-primary" style="z-index:0!important" @onclick=@(async () => await GetCharactersAndInfo())>Submit</div>
-                        <div class="btn btn-warning" style="z-index:0!important" @onclick=@(async () => { filterText = string.Empty; await GetCharactersAndInfo(); })>Clear</div>
-                    </div>
+        <div class="row text-center"> 
+            <div class="col"><img src="/rickandmorty/title.png" alt="title" width="512" height="128"></div>
+        </div>
+        
+        <div class="row justify-content-between mt-5">
+            <div class="col mb-1">
+                <div class="input-group input-group-sm">
+                    <input @bind-value="filterText" @bind-value:event="oninput" @onkeypress=InputKeyPress type="text" class="form-control shadow-none" placeholder="Filter Text">
+                    <button class="btn btn-primary mx-1" @onclick=@(async () => await GetCharactersAndInfo())>Submit</button>
+                    <button class="btn btn-danger" @onclick=@(async () => { filterText = string.Empty; await GetCharactersAndInfo(); })>Clear</button>
                 </div>
-
-                <nav aria-label="...">
-                    <ul class="pagination pagination-sm">
+            </div>
+            
+            <div class="col">
+                <nav>
+                    <ul class="pagination pagination-sm justify-content-end">
                         <li class="page-item @IsMinDisabled view-select" @onclick=@(() => DecrementPageView())>
                             <button class="page-link @IsMinDisabled" tabindex="-1">Previous</button>
                         </li>
                         @for (var i = minPageView; i <= @Math.Min(minPageView + maxPagesView - 1, totalPages); i++)
                         {
                             var index = i;
-                            <li style="z-index:0!important" class="page-item view-select @IsActive(index)" @onclick=@(async () => {SetActive(index); await GetCharactersAndInfo();})>
-                                <button style="width:40px!important" class="page-link">@index</button>
+                            <li class="page-item view-select @IsActive(index)" @onclick=@(async () => {SetActive(index); await GetCharactersAndInfo();})>
+                                <button style="width:35px" class="page-link">@index</button>
                             </li>
                         }
                         <li class="page-item @IsMaxDisabled view-select" @onclick=@(() => IncrementPageView())>
@@ -58,9 +42,9 @@ else
             </div>
         </div>
 
-        <table class="table">
+        <table class="table w-100">
             <thead>
-                <tr class="w-100">
+                <tr>
                     <th class="col-4">Name</th>
                     <th class="col-3">Identifies As</th>
                     <th>Image</th>
@@ -69,7 +53,7 @@ else
             <tbody>
                 @foreach (var character in characters)
                 {
-                    <tr class="w-100 view-select" @onclick=@(() => ViewCharacter(character.Id))>
+                    <tr @onclick=@(() => ViewCharacter(character.Id)) class="view-select">
                         <td class="col-4">@character.Name</td>
                         <td class="col-3">@character.Gender</td>
                         <td><img src="@character.Image" alt="@character.Name" width="128" height="128"></td>

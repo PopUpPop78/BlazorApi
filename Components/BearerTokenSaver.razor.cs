@@ -3,6 +3,8 @@ using BlazorApi.Models;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 
 namespace BlazorApi.Components
 {
@@ -12,6 +14,16 @@ namespace BlazorApi.Components
         public ILocalStorageService LocalStorageService {get;set;}
         [Inject]
         public IConfiguration Configuration {get;set;}
+        [Inject]
+        public IJSRuntime JsRuntime {get;set;}
+
+        [Parameter]
+        public string Title { get; set; }
+        [Parameter]
+        public string Message { get; set; }
+
+        private const string DefaultTitle = "ChatGPT Token";
+        private const string DefaultMessage = "Save your ChatGPT Bearer Token";
 
         public string ModalDisplay = "none;";
         public string ModalClass = "";
@@ -19,29 +31,41 @@ namespace BlazorApi.Components
 
         // Forms
         private EditContext editContext;
-        private ValidationMessageStore store;
-        public Token Token = new();
+        public Token Token;
 
-        protected override void OnInitialized()
+        protected async override Task OnInitializedAsync()
         {
-            editContext = new EditContext(Token);
-            store = new ValidationMessageStore(editContext);
+            Title ??= DefaultTitle;
+            Message ??= DefaultMessage;
+            Initialize();
+
+            await Task.CompletedTask;
         }
 
-        public void Open()
+        private void Initialize()
         {
-            Token.ChatGtp = null;
+            Token = new();
+            editContext = new EditContext(Token);          
+        }
+
+        private async Task ResetValidation(KeyboardEventArgs e)
+        {
+            Token.ChatGtp = await JsRuntime.InvokeAsync<string>("getElementText", "txtChatGpt");
+            editContext.Validate();
+        }
+
+        private void Open()
+        {
             ModalDisplay = "block;";
             ModalClass = "Show";
             ShowBackdrop = true;
-            
-            editContext = new EditContext(Token);
-            store = new ValidationMessageStore(editContext);
+
+            Initialize();
 
             StateHasChanged();
         }
 
-        public void Close()
+        private void Close()
         {
             ModalDisplay = "none";
             ModalClass = "";
@@ -50,7 +74,7 @@ namespace BlazorApi.Components
             StateHasChanged();
         }
 
-        public async Task Save()
+        private async Task Save()
         {            
             Console.WriteLine("Saving bearer token");
             await LocalStorageService.SetItemAsStringAsync(Configuration["chatGptBearerCookieKey"], Token.ChatGtp);

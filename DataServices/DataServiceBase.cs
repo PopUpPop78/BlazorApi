@@ -26,15 +26,13 @@ namespace BlazorApi.DataServices
             var content = new StringContent(contentString, Encoding.UTF8, ApplicationJson);
 
             var response = await Client.PostAsync(string.Empty, content);
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(responseString);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var data = await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), options);
                 return data;
-            }
-            else
-            {
-                var responseString = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(responseString);
             }
 
             return null;

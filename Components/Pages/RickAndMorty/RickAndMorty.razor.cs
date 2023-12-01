@@ -1,6 +1,7 @@
 using BlazorApi.DataServices;
 using BlazorApi.Dtos.RickAndMorty;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace BlazorApi.Components.Pages.RickAndMorty
 {
@@ -37,7 +38,10 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             activePage = ActivePage ?? activePage;
             minPageView = MinPageView ?? minPageView;
             filterText = FilterText ?? filterText;
+
             await GetCharactersAndInfo();
+            
+            MinMaxDisabled();
         }
 
         private async Task GetCharactersAndInfo()
@@ -45,13 +49,27 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             var charactersDto = await RickAndMortyDataService.GetAllCharacters(activePage, filterText);
 
             if(charactersDto != null)
+                UpdateCharacters(charactersDto.Data.CharactersInfo);
+
+            if(activePage >= totalPages)
             {
-                characters = charactersDto.Data.CharactersInfo.Characters;
-                totalPages = charactersDto.Data.CharactersInfo.Info.Pages ?? 1;
-                totalCharacters = charactersDto.Data.CharactersInfo.Info.Count ?? 0;
+                activePage = minPageView = 1;
+                charactersDto = await RickAndMortyDataService.GetAllCharacters(activePage, filterText);
+                
+                if(charactersDto != null)
+                    UpdateCharacters(charactersDto.Data.CharactersInfo);
             }
-            
+
             NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}/{filterText}");
+        }
+
+        private void UpdateCharacters(CharactersInfo characterInfo)
+        {
+            characters = characterInfo.Characters;
+            totalPages = characterInfo.Info.Pages ?? 1;
+            totalCharacters = characterInfo.Info.Count ?? 0;   
+                            
+            MinMaxDisabled();         
         }
 
         private void IncrementPageView()
@@ -60,8 +78,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
                 return;
 
             minPageView++;
-            IsMaxDisabled = minPageView + maxPagesView > totalPages ? disabled : "";
-            IsMinDisabled = minPageView == 1 ? disabled : "";
+            MinMaxDisabled();
             NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}/{filterText}");
         }
 
@@ -71,9 +88,14 @@ namespace BlazorApi.Components.Pages.RickAndMorty
                 return;
 
             minPageView--;
-            IsMinDisabled = minPageView == 1 ? disabled : "";
-            IsMaxDisabled = minPageView + maxPagesView > totalPages ? disabled : "";
+            MinMaxDisabled();
             NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}/{filterText}"); 
+        }
+
+        private void MinMaxDisabled()
+        {
+            IsMinDisabled = minPageView == 1 ? disabled : "";
+            IsMaxDisabled = minPageView + maxPagesView > totalPages ? disabled : "";            
         }
 
         private string IsActive(int item)
@@ -91,6 +113,12 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         {
             Console.WriteLine($"Navigating to character {id}");
             NavManager.NavigateTo($"/characterView/{id}");
+        }
+
+        private void InputKeyPress(KeyboardEventArgs e)
+        {
+            if(e.Code == "Enter")
+                _ = GetCharactersAndInfo(); 
         }
     }
 }
