@@ -111,11 +111,6 @@ code {
     color: #1b6ec2;
 }
 
-/* Want a little distance between pills */
-.badge {
-    margin-right:3px;
-}
-
 .spinner-grow {
     margin-right:3px;    
 }
