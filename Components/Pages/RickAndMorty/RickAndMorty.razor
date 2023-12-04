@@ -12,8 +12,8 @@ else
             <div class="col"><img src="/rickandmorty/title.png" alt="title" width="320" height="128"></div>
         </div>
         
-        <div class="row justify-content-between mt-5">
-            <div class="col mb-1">
+        <div class="d-flex flex-wrap justify-content-between mt-5">
+            <div class="col-lg-6 col-md-8 col-xs-10 mb-1">
                 <div class="input-group input-group-sm">
                     <input @bind-value="filterText" @bind-value:event="oninput" @onkeypress=InputKeyPress type="text" class="form-control shadow-none" placeholder="Filter Text">
                     <button class="btn btn-primary mx-1" @onclick=@(async () => await GetCharactersAndInfo())>Submit</button>
@@ -21,7 +21,7 @@ else
                 </div>
             </div>
             
-            <div class="col">
+            <div class="">
                 <nav>
                     <ul class="pagination pagination-sm justify-content-end">
                         <li class="page-item @IsMinDisabled view-select" @onclick=@(() => DecrementPageView())>
