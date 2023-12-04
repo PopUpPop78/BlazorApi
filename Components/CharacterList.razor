@@ -8,6 +8,9 @@
         background-color:#0d6efd;
         color: white;
     }
+    .text-center {
+        border-radius: 4px;
+    }
 </style>
 
 <div class="d-flex">
@@ -15,9 +18,9 @@
     <div class="d-flex flex-wrap ms-2">
         @foreach (var character in Characters)
         {
-            <div class="card view-select mx-1 my-1" @onclick=@(()=>ViewCharacter(character.Id))>
+            <div class="card view-select me-1 my-1 p-1" @onclick=@(()=>ViewCharacter(character.Id))>
                 <img class="mx-auto d-block" src="@character.Image" alt="@character.Name" width="128" height="128">
-                <div class="text-center">@character.Name</div>
+                <div class="text-center mt-1">@character.Name</div>
             </div>
         }
     </div>
