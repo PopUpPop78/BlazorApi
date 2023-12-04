@@ -49,28 +49,11 @@ else
                 <div class="ml-2">@character.Origin?.Name</div>
             </div>
             <hr>
-            <div class="d-flex">
-                <div class="col-3"><b>Last Known Location</b></div>
-                <div class="pb-2 ml-2">
-                    <div class="view-select badge bg-primary" @onclick=@(() => ViewLocation(character.Location.Id))>
-                        @character.Location?.Name
-                    </div>
-                </div>
-            </div>
+            <GenericList Items="@(new List<Generic>{ character.Location })" Route="/locationView/" Title="Location"></GenericList>
             <hr>
             <ChatGpt Question=@(character.AskChatGtp)></ChatGpt>
             <hr>
-            <div class="d-flex">
-                <div class="col-3"><b>Episodes</b></div>
-                <div class="pb-2 ml-2" style="margin-right:1px">
-                    @foreach (var episode in character.Episodes)
-                    {
-                        <div class="view-select badge bg-primary" @onclick=@(()=>ViewEpisode(episode.Id))>
-                            @episode.Name
-                        </div>
-                    }
-                </div>
-            </div>
+            <GenericList Items="character.Episodes" Route="/episodeView/" Title="Episodes"></GenericList>
         </div>
     </div>
 }
