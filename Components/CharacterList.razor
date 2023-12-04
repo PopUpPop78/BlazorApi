@@ -12,7 +12,7 @@
 
 <div class="d-flex">
     <div class="col-3"><b>Characters</b></div>
-    <div class="d-flex flex-wrap ml-2">
+    <div class="d-flex flex-wrap ms-2">
         @foreach (var character in Characters)
         {
             <div class="card view-select mx-1 my-1" @onclick=@(()=>ViewCharacter(character.Id))>
