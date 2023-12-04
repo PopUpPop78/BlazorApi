@@ -22,11 +22,5 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             if(episodeDto != null)
                 episode = episodeDto.Data.EpisodeInfo;
         }
-
-        private void ViewCharacter(string characterId)
-        {
-            Console.WriteLine($"Navigating to character {characterId}");
-            NavManager.NavigateTo($"/characterView/{characterId}");
-        }
     }
 }

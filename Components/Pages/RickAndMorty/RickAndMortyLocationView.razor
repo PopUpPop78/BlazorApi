@@ -1,6 +1,5 @@
 @page "/locationView/{id?}"
 
-
 @if(Id == null)
 {
     <p><em>No information exists for this location</em></p>
@@ -21,28 +20,17 @@ else
         <div class="row mt-3">
             <div class="d-flex">
                 <div class="col-3"><b>Dimension</b></div>
-                <div>@location.Dimension</div>
+                <div class="ml-2">@location.Dimension</div>
             </div>
             <hr>
             <div class="d-flex">
                 <div class="col-3"><b>Type</b></div>
-                <div>@location.Type</div>
+                <div class="ml-2">@location.Type</div>
             </div>
             <hr>
             <ChatGpt Question=@(location.AskChatGtp)></ChatGpt>
             <hr>
-            <div class="d-flex">
-                <div class="col-3"><b>Characters</b></div>
-                <div>
-                    @foreach (var character in location.Characters)
-                    {
-                        <div class="view-select mx-1 my-1" @onclick=@(()=>ViewCharacter(character.Id))>
-                            <img src="@character.Image" alt="@character.Name" width="128" height="128">
-                            <div class="badge bg-secondary">@character.Name</div>
-                        </div>   
-                    }
-                </div>
-            </div>
+            <CharacterList Characters="location.Characters"></CharacterList>
         </div>
     </div>
 }

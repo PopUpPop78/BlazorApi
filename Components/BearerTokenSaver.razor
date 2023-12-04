@@ -1,6 +1,10 @@
 @page "/bearertokensaver"
 
 <div class="btn custom" @onclick=@(Open)>@Title</div>
+@if(isToken)
+{
+    <img src="/green-check.png" width="24px" height="24px">
+}
 
 <div class="modal @ModalClass" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" style="display:@ModalDisplay">
     <div class="modal-dialog" role="document">

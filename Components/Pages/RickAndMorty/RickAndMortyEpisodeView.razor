@@ -15,29 +15,17 @@ else
         <div class="row mt-3">
             <div class="d-flex">
                 <div class="col-3"><b>Season / Episode</b></div>
-                <div>@episode.Episode</div>
+                <div class="ml-2">@episode.Episode</div>
             </div>
             <hr>
             <div class="d-flex">
                 <div class="col-3"><b>Air Date</b></div>
-                <div>@episode.AirDate</div>
+                <div class="ml-2">@episode.AirDate</div>
             </div>
             <hr>
             <ChatGpt Question=@(episode.AskChatGtp)></ChatGpt>
             <hr>
-            <div class="d-flex">
-                <div class="col-3"><b>Characters</b></div>
-                <div>
-                    @foreach (var character in episode.Characters)
-                    {
-                        <div class="view-select mx-1 my-1" @onclick=@(()=>ViewCharacter(character.Id))>
-                            <img src="@character.Image" alt="@character.Name" width="128" height="128">
-                            <div class="badge bg-secondary">@character.Name</div>
-                        </div>
-                        
-                    }
-                </div>
-            </div>
+            <CharacterList Characters="episode.Characters"></CharacterList>
         </div>
     </div>
 }

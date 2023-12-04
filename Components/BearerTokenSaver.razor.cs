@@ -24,6 +24,9 @@ namespace BlazorApi.Components
 
         private const string DefaultTitle = "ChatGPT Token";
         private const string DefaultMessage = "Save your ChatGPT Bearer Token";
+        private const string TokenStorageName = "chatGptBearerCookieKey";
+
+        private bool isToken;
 
         public string ModalDisplay = "none;";
         public string ModalClass = "";
@@ -39,7 +42,7 @@ namespace BlazorApi.Components
             Message ??= DefaultMessage;
             Initialize();
 
-            await Task.CompletedTask;
+            isToken = await IsTokenSaved();
         }
 
         private void Initialize()
@@ -77,9 +80,16 @@ namespace BlazorApi.Components
         private async Task Save()
         {            
             Console.WriteLine("Saving bearer token");
-            await LocalStorageService.SetItemAsStringAsync(Configuration["chatGptBearerCookieKey"], Token.ChatGtp);
+            await LocalStorageService.SetItemAsStringAsync(Configuration[TokenStorageName], Token.ChatGtp);
+            isToken = await IsTokenSaved();
 
             Close();
+        }
+
+        private async Task<bool> IsTokenSaved()
+        {
+            var token = await LocalStorageService.GetItemAsStringAsync(Configuration[TokenStorageName]);
+            return !string.IsNullOrWhiteSpace(token);
         }
     }
 }
