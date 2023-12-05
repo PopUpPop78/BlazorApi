@@ -28,7 +28,7 @@ else
                 <div class="ms-2">@location.Type</div>
             </div>
             <hr>
-            <ChatGpt Question=@(location.AskChatGtp)></ChatGpt>
+            <AskChatGpt IsAnswerOnly=true Model="@(new Models.ChatGptModel { Question = location.AskChatGtp })"></AskChatGpt>
             <hr>
             <CharacterList Characters="location.Characters"></CharacterList>
         </div>

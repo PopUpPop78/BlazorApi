@@ -1,0 +1,24 @@
+@keyframes highlight {
+    0% {
+        background: lightgreen
+    }
+    100% {
+        background: none;
+    }
+}
+
+.flash {
+    border-radius: 4px;
+    animation: highlight 1s;
+}
+   
+.spinner-grow {
+    margin-right:4px;
+    opacity: 0.5!important;
+}.slow{
+    animation-duration: 1000ms;
+}.quicker {
+    animation-duration: 1250ms;
+}.quickest {
+    animation-duration: 1500ms;
+}

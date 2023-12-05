@@ -1,11 +1,12 @@
 using BlazorApi.DataServices;
+using BlazorApi.Models;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
-namespace BlazorApi.Components.Pages
+namespace BlazorApi.Components
 {
     public partial class AskChatGpt
     {
@@ -18,24 +19,27 @@ namespace BlazorApi.Components.Pages
         [Inject]
         public IConfiguration Configuration {get;set;}
 
-        private async Task Ask()
-        {
-            Model.Answer = "";
-            await GetOpinionFromChatGtp();
-        }
+        [Parameter]
+        public bool IsAnswerOnly {get;set;} = false;
 
-        public ChatGptModel Model {get;set;}
+        [Parameter]
+        public ChatGptModel Model {get;set;} = new();
 
         private EditContext editContext;
         private bool isLoading = false;
-        private string flash = "";
+        private string flash;
 
         protected async override Task OnInitializedAsync()
         {
-            Model = new();
-            editContext = new EditContext(Model);
+            if(!IsAnswerOnly)
+            {
+                editContext = new EditContext(Model);                
+                await Task.CompletedTask;
 
-            await Task.CompletedTask;
+                return;
+            }
+
+            _ = GetOpinionFromChatGtp();
         }
 
         private async Task ResetValidation(KeyboardEventArgs e)
@@ -48,6 +52,7 @@ namespace BlazorApi.Components.Pages
         {
             try
             {
+                Model.Answer = "";
                 flash = "";
                 isLoading = true;
 
@@ -67,13 +72,6 @@ namespace BlazorApi.Components.Pages
                 flash = "flash";
                 StateHasChanged();
             }
-        }
-
-        public class ChatGptModel
-        {
-            [System.ComponentModel.DataAnnotations.Required]
-            public string Question {get;set;}
-            public string Answer {get;set;}
         }
     }
 }

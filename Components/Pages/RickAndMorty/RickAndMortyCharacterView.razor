@@ -51,7 +51,7 @@ else
             <hr>
             <GenericList Items="@(new List<Generic>{ character.Location })" Route="/locationView/" Title="Location"></GenericList>
             <hr>
-            <ChatGpt Question=@(character.AskChatGtp)></ChatGpt>
+            <AskChatGpt IsAnswerOnly=true Model="@(new Models.ChatGptModel { Question = character.AskChatGtp })"></AskChatGpt>
             <hr>
             <GenericList Items="character.Episodes" Route="/episodeView/" Title="Episodes"></GenericList>
         </div>

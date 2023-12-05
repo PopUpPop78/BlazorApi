@@ -23,7 +23,7 @@ else
                 <div class="ms-2">@episode.AirDate</div>
             </div>
             <hr>
-            <ChatGpt Question=@(episode.AskChatGtp)></ChatGpt>
+            <AskChatGpt IsAnswerOnly=true Model="@(new Models.ChatGptModel { Question = episode.AskChatGtp })"></AskChatGpt>
             <hr>
             <CharacterList Characters="episode.Characters"></CharacterList>
         </div>
