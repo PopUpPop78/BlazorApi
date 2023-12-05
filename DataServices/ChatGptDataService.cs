@@ -7,7 +7,8 @@ namespace BlazorApi.DataServices
         public async Task<string> GetAnswer(string question, string bearerToken)
         {
             var request = new Request {Prompt = question};
-
+            
+            Client.DefaultRequestHeaders.Clear();
             Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
 
             try
