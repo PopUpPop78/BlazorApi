@@ -15,6 +15,7 @@
                 <DataAnnotationsValidator />
                 <InputText @bind-Value:get="Model.Question" id="txtAskChatGpt" class="form-control shadow-none" placeholder="Question"></InputText>
                 <button class="btn btn-primary ms-1" type="submit">Submit</button>
+                <button class="btn btn-danger ms-1" type="reset" @onclick=@(ClearAnswer)>Clear</button>
             </div>
         </div>
 

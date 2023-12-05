@@ -48,6 +48,12 @@ namespace BlazorApi.Components
             editContext.Validate();
         }
 
+        public async Task ClearAnswer()
+        {
+            Model.Answer = "";
+            await Task.CompletedTask;
+        }
+
         private async Task GetOpinionFromChatGtp()
         {
             try
