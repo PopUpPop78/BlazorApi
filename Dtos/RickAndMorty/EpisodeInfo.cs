@@ -13,6 +13,6 @@ namespace BlazorApi.Dtos.RickAndMorty
         [JsonPropertyName("characters")]
         public IEnumerable<CharacterInfo> Characters {get;set;}
 
-        public string AskChatGtp => $"Tell me about the rick and morty episode called {Name}";
+        public string AskChatGtp => $"Tell me about the rick and morty episode called {Name}?";
     }
 }

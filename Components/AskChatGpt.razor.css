@@ -22,3 +22,7 @@
 }.quickest {
     animation-duration: 1500ms;
 }
+
+.small-blue {
+    color: #1b6ec2;
+}

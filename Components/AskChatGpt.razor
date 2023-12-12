@@ -44,7 +44,10 @@
             }
             else
             {
-                <div class="@flash">@Model.Answer</div>
+                <div class="d-flex flex-column">
+                    <span class="mb-2"><small class="small-blue">@Model.Question</small></span>
+                    <div class="@flash">@Model.Answer</div>
+                </div>
             }
         </div>
     }
