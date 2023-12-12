@@ -51,9 +51,9 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             if(charactersDto != null)
                 UpdateCharacters(charactersDto.Data.CharactersInfo);
 
-            if(activePage >= totalPages)
+            if(activePage > totalPages)
             {
-                activePage = minPageView = 1;
+                activePage = 1;
                 charactersDto = await RickAndMortyDataService.GetAllCharacters(activePage, filterText);
                 
                 if(charactersDto != null)
@@ -66,7 +66,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         private void UpdateCharacters(CharactersInfo characterInfo)
         {
             characters = characterInfo.Characters;
-            totalPages = characterInfo.Info.Pages ?? 1;
+            totalPages = characterInfo.Info.Pages ?? 0;
             totalCharacters = characterInfo.Info.Count ?? 0;   
                             
             MinMaxDisabled();         
@@ -77,7 +77,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             if(minPageView + maxPagesView > totalPages)
                 return;
 
-            minPageView++;
+            minPageView = Math.Min(minPageView + 5, totalPages - 5);
             MinMaxDisabled();
             NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}/{filterText}");
         }
@@ -87,7 +87,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
             if(minPageView == 1)
                 return;
 
-            minPageView--;
+            minPageView = Math.Max(minPageView -5 , 1);
             MinMaxDisabled();
             NavManager.NavigateTo($"/rickandmorty/{activePage}/{minPageView}/{filterText}"); 
         }
@@ -95,7 +95,7 @@ namespace BlazorApi.Components.Pages.RickAndMorty
         private void MinMaxDisabled()
         {
             IsMinDisabled = minPageView == 1 ? disabled : "";
-            IsMaxDisabled = minPageView + maxPagesView > totalPages ? disabled : "";            
+            IsMaxDisabled = minPageView + maxPagesView >= totalPages ? disabled : "";            
         }
 
         private string IsActive(int item)

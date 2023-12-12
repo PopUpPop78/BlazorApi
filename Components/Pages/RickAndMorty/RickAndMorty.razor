@@ -27,7 +27,7 @@ else
                         <li class="page-item @IsMinDisabled view-select" @onclick=@(() => DecrementPageView())>
                             <button class="page-link @IsMinDisabled" tabindex="-1">Previous</button>
                         </li>
-                        @for (var i = minPageView; i <= @Math.Min(minPageView + maxPagesView - 1, totalPages); i++)
+                        @for (var i = minPageView; i <= @Math.Min(minPageView + maxPagesView, totalPages); i++)
                         {
                             var index = i;
                             <li class="page-item view-select @IsActive(index)" @onclick=@(async () => {SetActive(index); await GetCharactersAndInfo();})>
